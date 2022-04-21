@@ -1,0 +1,39 @@
+crop_names:
+  miscanthus: 'Miscanthus'
+  switchgrass: 'Switchgrass'
+  giant_reed: 'Giant reed'
+  canary: 'Reed canary grass'
+  cardoon: 'Cardoon'
+
+reference:
+  year: 2020 # reference year of the study (i.e stats of the crop production)
+
+resolution: 
+  value: 1000 
+  unit: meters
+
+resolution_climate:
+  value: 5000 
+  unit: meters
+
+bbox_4326:
+  lat_min: 34.4   # min_y
+  lat_max: 80.6   # max_y
+  lon_min: -24.6  # min_x
+  lon_max: 66.3   # max_x
+  extent: [-24,34,70,81] # min_x, min_y, max_x, max_y
+
+bbox_3035:
+  lat_min: 1428400 # min_y
+  lat_max: 6378600 # max_y
+  lon_min: 2635800 # min_x
+  lon_max: 7603200 # max_x
+  extent: [2635800,1428400,7603200,6378600] # min_x, min_y, max_x, max_y
+
+
+locations:
+  crop_yield: EnergyCrop_Yield_EU_EPSG3035
+
+verbose:
+  quiet: False
+
