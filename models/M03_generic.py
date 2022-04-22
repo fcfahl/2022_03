@@ -69,7 +69,10 @@ class Generic(lyr.Layer):
 
     def set_tmp(self):
         self.tmp = f'TMP_{self.layer}'
-        # self.tmp_at = f"{self.tmp}@{self.mapset}"   
+        # self.tmp_at = f"{self.tmp}@{self.mapset}"
+
+    def set_mask_attr(self, mask):
+        self.mask = mask
 
     def copy_layer(self, type=None, in_file=None, out_file=None):
 
@@ -137,6 +140,8 @@ class Generic(lyr.Layer):
             return pixel_area / 1000000
         else:
             print('unit of area not defined')
+
+
 
 
 # ____________________ Overwrite IO parameters

@@ -3,7 +3,10 @@ disable_existing_loggers: true
 
 formatters:
     standard:
-        format: "%(levelname)-8s - %(asctime)s -  %(message)s"
+        format: "%(levelname)-8s - %(asctime)s - %(message)s"
+        datefmt: "%I:%M:%S"
+    grass:
+        format: "%(asctime)s - %(message)s"
         datefmt: "%I:%M:%S"
     error:
         format: "%(levelname)s <PID %(process)d:%(processName)s> %(name)s.%(funcName)s(): %(message)s - %(asctime)s"
@@ -67,6 +70,16 @@ handlers:
         encoding: utf8
         mode: 'w'
 
+    grass_file_handler:
+        class: logging.handlers.RotatingFileHandler
+        level: DEBUG
+        formatter: grass
+        filename: ./logs/grass.log
+        maxBytes: 10485760 # 10MB
+        backupCount: 20
+        encoding: utf8
+        mode: 'w'
+
 root:
     level: NOTSET
     handlers: [info_file_handler] # console
@@ -84,4 +97,9 @@ loggers:
     c:
         level: DEBUG
         handlers: [info_file_handler, error_file_handler, critical_file_handler, debug_file_handler, warn_file_handler]
+        propogate: no
+
+    g:
+        level: DEBUG
+        handlers: [grass_file_handler]
         propogate: no

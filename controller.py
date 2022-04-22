@@ -37,14 +37,17 @@ class Controller(bse.Base):
 
     def adm(self, iso3code=None):
 
-        self.europa_border  = self.add_vector(mapset='adm', layer='Europa_Border',  in_file='ref-coastline-2016-EPSG3035.gpkg', db_layer='EU_COAS_RG_20M_2016', in_folder=self.path.administrative['Europa'].joinpath('Eurostat', '03_EU_Coast_lines', 'Eurostat'), ext='gpkg')
-        self.nuts_0         = self.add_vector(mapset='adm', layer='NUTS_0',         in_file='NUTS_2021_1M_EPSG3035_Europa_Extension.gpkg', db_layer='NUTS_0_Europa_No_Turkey', in_folder=self.path.administrative['Europa'].joinpath('Eurostat', '02_Europa_Extended'), ext='gpkg')
-        self.nuts_2         = self.add_vector(mapset='adm', layer='NUTS_2',         in_file='NUTS_2021_1M_EPSG3035_Europa_Extension.gpkg', db_layer='NUTS_2_Europa_No_Turkey', in_folder=self.path.administrative['Europa'].joinpath('Eurostat', '02_Europa_Extended'), ext='gpkg')
+        self.europa_border  = self.add_vector(mapset='adm', layer='Europa_Border', db_layer='Europa_Border', db_location=str(self.grass_location['crop_yield']['location']), db_path=str(self.path.gis_projects.joinpath(str(self.grass_location['crop_yield']['db_path']))), ext='grass')
+        self.nuts_0  = self.add_vector(mapset='adm', layer='NUTS_0', db_layer='NUTS_0', db_location=str(self.grass_location['crop_yield']['location']), db_path=str(self.path.gis_projects.joinpath(str(self.grass_location['crop_yield']['db_path']))), ext='grass')
+        self.nuts_2  = self.add_vector(mapset='adm', layer='NUTS_2', db_layer='NUTS_2', db_location=str(self.grass_location['crop_yield']['location']), db_path=str(self.path.gis_projects.joinpath(str(self.grass_location['crop_yield']['db_path']))), ext='grass')
 
-        self.mask           = self.add_raster(mapset='adm', layer=f'Europa_MASK_{self.resolution}m', resolution=self.resolution)
+        self.mask  = self.add_raster(mapset='adm', layer='Europa_MASK_1000m', in_file='Europa_MASK_1000m.pack', in_folder=str(self.path.gis_projects.joinpath(str(self.grass_location['crop_yield']['path']),'01_Data','02_Raster','pack')), ext='pack' )
 
-        if iso3code:
-            self.country  = self.add_vector(mapset='adm', layer=f'Country_{iso3code}')
+
+        # self.mask           = self.add_raster(mapset='adm', layer=f'Europa_MASK_{self.resolution}m', resolution=self.resolution)
+        #
+        # if iso3code:
+        #     self.country  = self.add_vector(mapset='adm', layer=f'Country_{iso3code}')
 
 
 ################

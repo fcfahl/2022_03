@@ -1,8 +1,6 @@
-import math
+import math,wrapt
 
 import grass.script as grass
-import grass.script.setup as gsetup
-from grass.pygrass.modules.shortcuts import raster as r
 from grass.pygrass.modules import Module
 
 import models.M03_generic as gnr
@@ -13,26 +11,26 @@ from models.M03_generic import useIf
 class Raster(gnr.Generic):
 
     def __init__(self, mapset, model='raster', in_file=None, layer=None, out_file=None, in_folder=None, out_folder=None, **kwargs):
-
         gnr.Generic.__init__(self, mapset=mapset, model=model, in_file=in_file, layer=layer, out_file=out_file, in_folder=in_folder, out_folder=out_folder, **kwargs)
+        self.run = None
 
-        # print(self)
+    @wrapt.decorator
+    def run_module(wrapped, instance, args, kwargs):
+        """ Decorator to log the grass modules
+            Used wrapt library in order to preserve the signature of the caller function
+            see: https://hynek.me/articles/decorators/
+        """
+        func_name = wrapped.__name__
+        try:
+            wrapped(*args, **kwargs)
+            instance.grass_log(f"___ function -> [{func_name}] ___ ")
+            if instance.run:
+                instance.grass_log(instance.run)
 
-    def run_module(func):
-        func_name = func.__name__
+        except Exception as ex:
+            instance.grass_log(f"ERROR {str(ex)} on [{func_name.upper()}]")
 
-        def __init__(self, label: str = None):
-            self.label = label
-
-        def __call__(self, func):
-            if self.label is None:  # Label was not provided
-                self.label = func.__name__  # Use function's name.
-            return super().__call__(func)
-
-            print(func_name)
-
-        # self.log =
-
+        return wrapped
 
 
     # _________________ Import methods
@@ -44,8 +42,14 @@ class Raster(gnr.Generic):
     def import_raster_reproject (self, input=None, output=None, band=1, resolution='region', extent='region', resample='nearest', resolution_value=None, flags=''):
         self.run = Module("r.import", input=useIf(self.in_file_path, value=input), output=useIf(self.layer, output), band=band, resample=resample, extent=extent, resolution=resolution, resolution_value=resolution_value, flags=flags, overwrite=True, quiet=self.quiet)
 
+    @run_module
     def import_raster_grass (self, db_location=None, db_mapset=None, db_layer=None, db_path=None, output=None):
-        self.run = Module("r.proj", location=useIf(self.db_location, db_location), mapset=useIf(self.db_mapset, db_mapset), dbase=useIf(self.db_path, db_path), input=useIf(self.db_layer, db_layer), output=useIf(self.layer, output), overwrite=True, quiet=self.quiet)
+        self.run = Module("r.proj", location=useIf(self.db_location, db_location), mapset=useIf(self.mapset, db_mapset), dbase=useIf(self.db_path, db_path), input=useIf(self.db_layer, db_layer), output=useIf(self.layer, output), overwrite=True, quiet=self.quiet)
+
+    @run_module
+    def import_raster_pack (self, input=None, output=None, flags=''):
+        self.run = Module("r.unpack", input=useIf(self.in_file_path, input), output=useIf(self.layer, output), overwrite=True, quiet=self.quiet, flags=flags)
+
 
     def import_netcdf_unscale(self, netcdf, output, band, scale, offset):
 

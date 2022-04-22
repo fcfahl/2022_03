@@ -28,7 +28,8 @@ class Logger():
         # self.warning('___ Initiate log ___')
         # self.debug('___ Initiate log ___')
         # self.error('___ Initiate log ___')
-        self.critical('___ Initiate log ___')
+        # self.critical('___ Initiate log ___')
+        self.grass_log('___ GRASS Initiate log ___')
 
 
     def info(self, msg=None):
@@ -50,6 +51,10 @@ class Logger():
     def critical(self, msg):
         log = logging.getLogger('c')
         log.critical(msg)
+
+    def grass_log(self, msg):
+        log = logging.getLogger('g')
+        log.debug(msg)
 
 
     def __str__(self):

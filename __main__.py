@@ -15,7 +15,10 @@ if __name__ == "__main__":
 
     # _______________ objects
     obj = ctr.Controller()
-    obj.adm()
+
+    ldr.import_vectors(obj)
+    ldr.import_rasters(obj)
+
 
 
 

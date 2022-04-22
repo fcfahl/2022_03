@@ -20,6 +20,7 @@ class Base(log.Logger):
         self.crop_names = self.get_crop_names()
         self.resolution = self.get_resolution()
         self.reference_year = self.get_reference_year()
+        self.grass_location = self.get_grass_location()
 
         # cnf.GrassConfig()
 
@@ -59,27 +60,8 @@ class Base(log.Logger):
         else:
             return self.params.get('bbox_3035')
 
-    ################## ATTRIBUTES
-
-    def set_attribute(self, attr, value, at=False, dict_=True):
-        setattr(self, attr, value)
-        if at:
-            if dict:
-                setattr(self, f"{attr}_at", {key: f"{layer}@{self.mapset}" for key, layer in value.items()})
-            else:
-                setattr(self, f"{attr}_at", f"{value}@{self.mapset}")
-
-    def get_obj_attribute(self, attr, at=False):
-
-        if at:
-            return getattr(self, f"{attr}_at")
-        else:
-            return getattr(self, attr)
-
-    ################## LAYERS
-
-    def set_mask_attr(self, mask):
-        self.mask = mask
+    def get_grass_location(self):
+        return self.params.get('GRASS_locations')
 
     ############# GENERAL
 

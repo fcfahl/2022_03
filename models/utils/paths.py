@@ -10,7 +10,9 @@ class PathDefinition:
     def __init__(self):
 
         self.script = Path(__file__).parent.parent.parent.absolute()
+
         self.project = self.script.parent.parent.parent.absolute()
+        self.gis_projects    = self.project.parent.parent.absolute()
         self.project_name = self.project.name
 
         self.data = self.project.joinpath('01_Data').absolute()

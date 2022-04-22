@@ -26,9 +26,7 @@ def do_raster_reprojection(obj):
 
 def import_vectors(obj):
 
-    #_______________ topics
     obj.adm()
-
 
     for layer in obj.vectors.values():
 
@@ -50,15 +48,16 @@ def import_vectors(obj):
         #     load_vectors(layer)
 
         elif layer.ext == 'grass':
-            print ("\n______",layer)
-            # layer.set_mapset()
-            # layer.import_Grass()
+            layer.set_mapset()
+            layer.import_vector_grass()
+            layer.set_region(format='vector')
 
 
-    # _______________ Topics
-    obj.adm()
+
 
 def import_rasters(obj):
+
+    obj.adm()
 
     for raster in obj.rasters.values():
 
@@ -72,8 +71,13 @@ def import_rasters(obj):
         elif raster.ext == 'tif':
             do_raster_reprojection(raster)
 
+        elif raster.ext == 'pack':
+            raster.set_mapset()
+            raster.import_raster_pack ()
+
         elif raster.ext == 'grass':
-            pass
+            raster.set_mapset()
+            raster.import_raster_grass()
 
         # ________________ clip raster if needed
         if  hasattr(raster, 'clip'):

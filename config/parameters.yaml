@@ -31,9 +31,14 @@ bbox_3035:
   extent: [2635800,1428400,7603200,6378600] # min_x, min_y, max_x, max_y
 
 
-locations:
-  crop_yield: EnergyCrop_Yield_EU_EPSG3035
+GRASS_locations:
+  crop_yield:
+    location: EnergyCrop_Yield_EU_EPSG3035
+    path: 2021/07_EnergyCrop_Yield_EU
+    db_path: 2021/07_EnergyCrop_Yield_EU/01_Data/04_GRASS_DB
+
+
 
 verbose:
-  quiet: False
+  quiet: True
 

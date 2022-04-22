@@ -5,7 +5,7 @@ import models.utils.utilities as utl
 
 import models.M01_base as bse
 
-class Layer(bse.Base):
+class Layer(bse.Base): #
 
     model      = None
     mapset     = "PERMANET"
@@ -52,6 +52,22 @@ class Layer(bse.Base):
         self.__dict__.update(kwargs)
 
 
+    ################## ATTRIBUTES
+
+    def set_attribute(self, attr, value, at=False, dict_=True):
+        setattr(self, attr, value)
+        if at:
+            if dict:
+                setattr(self, f"{attr}_at", {key: f"{layer}@{self.mapset}" for key, layer in value.items()})
+            else:
+                setattr(self, f"{attr}_at", f"{value}@{self.mapset}")
+
+    def get_obj_attribute(self, attr, at=False):
+
+        if at:
+            return getattr(self, f"{attr}_at")
+        else:
+            return getattr(self, attr)
 
 
 
