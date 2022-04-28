@@ -35,19 +35,13 @@ class Controller(bse.Base):
         return self.rasters[layer]
 
 
-    def adm(self, iso3code=None):
+    def adm(self):
 
         self.europa_border  = self.add_vector(mapset='adm', layer='Europa_Border', db_layer='Europa_Border', db_location=str(self.grass_location['crop_yield']['location']), db_path=str(self.path.gis_projects.joinpath(str(self.grass_location['crop_yield']['db_path']))), ext='grass')
         self.nuts_0  = self.add_vector(mapset='adm', layer='NUTS_0', db_layer='NUTS_0', db_location=str(self.grass_location['crop_yield']['location']), db_path=str(self.path.gis_projects.joinpath(str(self.grass_location['crop_yield']['db_path']))), ext='grass')
         self.nuts_2  = self.add_vector(mapset='adm', layer='NUTS_2', db_layer='NUTS_2', db_location=str(self.grass_location['crop_yield']['location']), db_path=str(self.path.gis_projects.joinpath(str(self.grass_location['crop_yield']['db_path']))), ext='grass')
 
         self.mask  = self.add_raster(mapset='adm', layer='Europa_MASK_1000m', in_file='Europa_MASK_1000m.pack', in_folder=str(self.path.gis_projects.joinpath(str(self.grass_location['crop_yield']['path']),'01_Data','02_Raster','pack')), ext='pack' )
-
-
-        # self.mask           = self.add_raster(mapset='adm', layer=f'Europa_MASK_{self.resolution}m', resolution=self.resolution)
-        #
-        # if iso3code:
-        #     self.country  = self.add_vector(mapset='adm', layer=f'Country_{iso3code}')
 
 
 ################
